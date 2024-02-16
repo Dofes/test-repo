@@ -1,0 +1,26 @@
+name: Update File
+
+on:
+  push:
+    branches:
+      - main  # 或者选择你想触发此工作流的分支
+
+jobs:
+  update-file:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Update file
+        run: |
+          echo "添加的新内容" >> example.txt
+
+      - name: Commit and push if changed
+        run: |
+          git config --global user.email "you@example.com"
+          git config --global user.name "Your Name"
+          git add example.txt
+          git commit -m "Update example.txt" || exit 0  # 如果没有变化，则退出
+          git push
